@@ -18,7 +18,7 @@ export const SORT_ORDER_ICON = {
 };
 
 export const DEFAULT_VALUE = {
-  USER_ID: -1,
+  USER_ID: null,
   CATEGORY_IDS: [],
   SEARCH_QUERY: '',
   SORT_BY: 'id',
