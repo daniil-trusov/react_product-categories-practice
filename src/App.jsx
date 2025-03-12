@@ -6,7 +6,11 @@ import usersFromServer from './api/users';
 import categoriesFromServer from './api/categories';
 import productsFromServer from './api/products';
 
-import { SORT_ORDER, DEFAULT_VALUE } from './Components/Constants';
+import {
+  SORT_ORDER,
+  DEFAULT_VALUE,
+  SORT_ORDER_ICON,
+} from './Components/Constants';
 import { FilterUser } from './Components/FilterUser';
 import { SearchField } from './Components/SearchField/SearchField';
 import { FilterCategory } from './Components/FilterCategory';
@@ -52,20 +56,18 @@ export const App = () => {
       return;
     }
 
-    const sortOrders = Object.values(SORT_ORDER);
-    let current = sortOrders.indexOf(sortOrder);
-
-    if (current < 0) {
-      current = 0;
+    switch (sortOrder) {
+      case SORT_ORDER.ASK:
+        setSortOrder(SORT_ORDER.DESK);
+        break;
+      case SORT_ORDER.NONE:
+        setSortOrder(SORT_ORDER.ASK);
+        break;
+      default:
+        setSortBy(DEFAULT_VALUE.SORT_BY);
+        setSortOrder(SORT_ORDER.NONE);
+        break;
     }
-
-    const updated = (current + 1) % sortOrders.length;
-
-    if (sortOrders[updated] === SORT_ORDER.NONE) {
-      setSortBy(DEFAULT_VALUE.SORT_BY);
-    }
-
-    setSortOrder(sortOrders[updated]);
   }
 
   function updateCategoriesFilter(categoryIndex) {
@@ -92,15 +94,15 @@ export const App = () => {
     if (currentSortBy === sortBy) {
       switch (sortOrder) {
         case SORT_ORDER.ASK:
-          return 'fa-sort-up';
+          return SORT_ORDER_ICON.ASK;
         case SORT_ORDER.DESK:
-          return 'fa-sort-down';
+          return SORT_ORDER_ICON.DESK;
         default:
-          return 'fa-sort';
+          return SORT_ORDER_ICON.NONE;
       }
     }
 
-    return 'fa-sort';
+    return SORT_ORDER_ICON.NONE;
   }
 
   return (
