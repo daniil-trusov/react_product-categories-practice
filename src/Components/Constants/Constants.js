@@ -21,4 +21,6 @@ export const DEFAULT_VALUE = {
   USER_ID: -1,
   CATEGORY_IDS: [],
   SEARCH_QUERY: '',
+  SORT_BY: 'id',
+  SORT_ORDER: '',
 };

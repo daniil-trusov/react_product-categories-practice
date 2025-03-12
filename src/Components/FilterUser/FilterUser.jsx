@@ -9,7 +9,9 @@ export const FilterUser = ({ users, activeId, onUserClick }) => {
       {buttonInfos.map(({ id, name }) => (
         <a
           key={id}
-          data-cy="FilterUser"
+          data-cy={
+            id !== DEFAULT_VALUE.USER_ID ? 'FilterUser' : 'FilterAllUsers'
+          }
           href="#/"
           className={cn({ 'is-active': id === activeId })}
           onClick={() => onUserClick(id)}

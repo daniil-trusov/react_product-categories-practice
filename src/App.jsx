@@ -6,7 +6,7 @@ import usersFromServer from './api/users';
 import categoriesFromServer from './api/categories';
 import productsFromServer from './api/products';
 
-import { SORT_BY, SORT_ORDER, DEFAULT_VALUE } from './Components/Constants';
+import { SORT_ORDER, DEFAULT_VALUE } from './Components/Constants';
 import { FilterUser } from './Components/FilterUser';
 import { SearchField } from './Components/SearchField/SearchField';
 import { FilterCategory } from './Components/FilterCategory';
@@ -20,12 +20,14 @@ const productsUprepared = unionProducts(
 );
 
 export const App = () => {
-  const [filterUserId, setFilterUserId] = useState(-1);
-  const [filterCategoryIds, setFilterCategoryIds] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [filterUserId, setFilterUserId] = useState(DEFAULT_VALUE.USER_ID);
+  const [filterCategoryIds, setFilterCategoryIds] = useState(
+    DEFAULT_VALUE.CATEGORY_IDS,
+  );
+  const [searchQuery, setSearchQuery] = useState(DEFAULT_VALUE.SEARCH_QUERY);
 
-  const [sortBy, setSortBy] = useState(SORT_BY.ID);
-  const [sortOrder, setSortOrder] = useState(SORT_ORDER.NONE);
+  const [sortBy, setSortBy] = useState(DEFAULT_VALUE.SORT_BY);
+  const [sortOrder, setSortOrder] = useState(DEFAULT_VALUE.SORT_ORDER);
 
   const productsPrepared = prepareProducts(
     productsUprepared,
@@ -45,6 +47,9 @@ export const App = () => {
   function updateSortOrder(newCategory) {
     if (newCategory !== sortBy) {
       setSortBy(newCategory);
+      setSortOrder(SORT_ORDER.ASK);
+
+      return;
     }
 
     const sortOrders = Object.values(SORT_ORDER);
@@ -55,6 +60,10 @@ export const App = () => {
     }
 
     const updated = (current + 1) % sortOrders.length;
+
+    if (sortOrders[updated] === SORT_ORDER.NONE) {
+      setSortBy(DEFAULT_VALUE.SORT_BY);
+    }
 
     setSortOrder(sortOrders[updated]);
   }
