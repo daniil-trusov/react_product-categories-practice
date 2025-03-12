@@ -10,7 +10,7 @@ export const FilterCategory = ({
       href="#/"
       data-cy="AllCategories"
       className={cn('button is-success mr-6', {
-        'is-outlined': filterCategoryIds.length !== 0,
+        'is-outlined': filterCategoryIds.length
       })}
       onClick={() => onCategoryClick()}
     >
